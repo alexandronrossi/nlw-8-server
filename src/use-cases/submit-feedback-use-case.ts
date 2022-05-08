@@ -11,7 +11,7 @@ export class SubmitFeedbackUseCase {
   constructor(
     private feedbacksRepository: FeedbacksRepository,
     private mailAdapter: MailAdapter
-  ) {}
+  ) { }
 
   async execute(request: SubmitFeedbackUseCaseRequest) {
     const { type, comment, screenshot } = request;
@@ -29,8 +29,8 @@ export class SubmitFeedbackUseCase {
     }
 
     await this.feedbacksRepository.create({
-      type, 
-      comment, 
+      type,
+      comment,
       screenshot
     });
 
@@ -38,8 +38,9 @@ export class SubmitFeedbackUseCase {
       subject: 'Novo Feedback',
       body: [
         `<div style="font-family:sans-serif; font-size:16px; color: #111;">`,
-          `<p>Tipo do feedback: ${type}</p>`,
-          `<p>Comentário do feedback: ${comment}</p>`,
+        `<p>Tipo do feedback: ${type}</p>`,
+        `<p>Comentário do feedback: ${comment}</p>`,
+        `<img src="${screenshot}" alt="Screenshot da tela" />`,
         `</div>`,
       ].join('\n')
     });
